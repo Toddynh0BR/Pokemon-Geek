@@ -58,7 +58,8 @@ const typeIcons = {
   fairy,
 };
 
-const colorMap = {
+type Color = 'black' | 'blue' | 'brown' | 'gray' | 'green' | 'pink' | 'purple' | 'red' | 'white' | 'yellow';
+const colorMap: { [key in Color]: { main: string; dark: string } } = {
   black: {
     main: "#333333",
     dark: "#000000"
@@ -101,16 +102,39 @@ const colorMap = {
   }
 };
 
+interface PokemonType {
+  type: {
+    name: string;
+  };
+}
+
+interface PokemonData {
+  id: number;
+  name: string;
+  img: string;
+  color: Color;
+  description: string;
+  types: PokemonType[];
+  gif: string;
+}
+
+interface EvolutionData {
+  id: number;
+  name: string;
+  sprite: string;
+  number: number;
+}
+
 const MySwal1 = withReactContent(Swal);
 
 function App() {
  const [stage, setStage] = useState(1);//estagio da pagina
- const [search, setSearch] = useState("false");//se algo foi buscado
- const [query, setQuery] = useState("");//valor do input de pesquisa
- const [emFoco, setEmFoco] = useState(false);//se input esta em foco ou não
- const [pokemon, setPokemon] = useState(null);//informações do pokemon
- const [evolutions, setEvolutions] = useState([])//evoluções do pokemon
- const [tutorial, setTutorial] = useState(0)//constante de tutorial
+ const [search, setSearch] = useState<'false' | 'searching' | 'true'>('false');
+ const [query, setQuery] = useState<string>('');
+ const [emFoco, setEmFoco] = useState<boolean>(false);
+ const [pokemon, setPokemon] = useState<PokemonData | null>(null);
+ const [evolutions, setEvolutions] = useState<EvolutionData[]>([]);
+ const [tutorial, setTutorial] = useState<number>(0);
 
  const audioCath = useRef(new Audio('../public/sounds/catchPoke.mp3'));
  const audioWait = useRef(new Audio('../public/sounds/pokeWaiting.mp3'));
@@ -152,8 +176,8 @@ function App() {
     console.log(pokeRes)
 
     const flavorTexts = speciesRes.data.flavor_text_entries;
-    const ptBrEntry = flavorTexts.find(entry => entry.language.name === "pt-BR");
-    const enEntry = flavorTexts.find(entry => entry.language.name === "en");
+    const ptBrEntry = flavorTexts.find((entry: { language: { name: string; }; }) => entry.language.name === "pt-BR");
+    const enEntry = flavorTexts.find((entry: { language: { name: string; }; }) => entry.language.name === "en");
   
     // Selecionar a descrição disponível
     const description = ptBrEntry
@@ -165,8 +189,8 @@ function App() {
     // Limpar quebras de linha e caracteres especiais
     const cleanDescription = description.replace(/[\n\f]/g, ' ');
 
-    const evoNames = [];
-    const traverseEvolution = (node) => {
+    const evoNames: any[] = [];
+    const traverseEvolution = (node: { species: { name: any; }; evolves_to: any[]; }) => {
       evoNames.push(node.species.name);
       if (node.evolves_to.length > 0) {
         node.evolves_to.forEach(evolution => traverseEvolution(evolution));
@@ -228,7 +252,7 @@ function App() {
   }
  };
 
- async function HandleChange(pokeName: any) {
+ async function HandleChange(pokeName: string): Promise<void>{
   try {
 
     const pokeRes = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokeName}`);
@@ -237,8 +261,8 @@ function App() {
     const evolutionData = evoRes.data;
 
     const flavorTexts = speciesRes.data.flavor_text_entries;
-    const ptBrEntry = flavorTexts.find(entry => entry.language.name === "pt-BR");
-    const enEntry = flavorTexts.find(entry => entry.language.name === "en");
+    const ptBrEntry = flavorTexts.find((entry: { language: { name: string; }; }) => entry.language.name === "pt-BR");
+    const enEntry = flavorTexts.find((entry: { language: { name: string; }; }) => entry.language.name === "en");
   
     // Selecionar a descrição disponível
     const description = ptBrEntry
@@ -250,8 +274,8 @@ function App() {
     // Limpar quebras de linha e caracteres especiais
     const cleanDescription = description.replace(/[\n\f]/g, ' ');
 
-    const evoNames = [];
-    const traverseEvolution = (node) => {
+    const evoNames: any[] = [];
+    const traverseEvolution = (node: { species: { name: any; }; evolves_to: any[]; }) => {
       evoNames.push(node.species.name);
       if (node.evolves_to.length > 0) {
         node.evolves_to.forEach(evolution => traverseEvolution(evolution));
@@ -325,7 +349,7 @@ function App() {
       toast: true,
       width: 500,
       showConfirmButton: false,
-      timer: tutorial == 2 ? 100: null,
+      timer: tutorial >= 2 ? 100: 1000000,
       timerProgressBar: true,
       customClass: {
         popup: 'swal1'
@@ -410,7 +434,6 @@ function App() {
         <input 
          placeholder='Digite o nome do Pokemon' 
          onChange={(e) => setQuery(e.target.value)}
-         onInput={(e) =>  setQuery(e.target.value)}
          onFocus={handleFocus} 
          onBlur={handleBlur}
          type="text"  
@@ -482,7 +505,7 @@ function App() {
        <div className="elements">
         {pokemon && pokemon.types ? pokemon.types.length ? pokemon.types.map((item, index)=> (
           <div key={index} className={`icon ${item.type.name}`}>
-            <img src={typeIcons[item.type.name]} alt="" />
+            <img src={typeIcons[item.type.name as keyof typeof typeIcons]} alt="" />
           </div>
         )) : null : null }
        </div>
@@ -500,7 +523,7 @@ function App() {
             evolutions.map((item, index)=> (
               <div 
                key={item.id} 
-               className={`evo poke${index += 1} ${item.name == pokemon.name ? 'this' : ''}`} 
+               className={`evo poke${index += 1} ${item.name == pokemon?.name ? 'this' : ''}`} 
                style={{background: `radial-gradient(circle,${colors.main} 30%, ${colors.dark} 100%)`}}
                onClick={()=> {
                 HandleChange(item.name)

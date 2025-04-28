@@ -3,6 +3,9 @@ import styled from "styled-components";
 import Top from "./assets/Top.png";
 import BG from "./assets/Bg.png";
 
+interface DivProps {
+  isActive: number;
+}
 
 export const Container = styled.div`
 height: 100vh;
@@ -391,7 +394,7 @@ export const InputWapper = styled.div`
   }
 `
 
-export const Background = styled.div`
+export const Background = styled.div<DivProps>`
 height: 100vh;
 width: 100%;
 
@@ -403,7 +406,7 @@ transition: ${({ isActive }) => isActive == 3 ? '.5s ease-out' : '1.5s ease-in'}
 opacity: ${({ isActive }) => isActive == 3 ? 1 : 0};
 `
 
-export const PokeInfo = styled.div`
+export const PokeInfo = styled.div<DivProps>`
 height: 100vh;
 width: 100%;
 

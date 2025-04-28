@@ -136,10 +136,10 @@ function App() {
  const [evolutions, setEvolutions] = useState<EvolutionData[]>([]);
  const [tutorial, setTutorial] = useState<number>(0);
 
- const audioCath = useRef(new Audio('../public/sounds/catchPoke.mp3'));
- const audioWait = useRef(new Audio('../public/sounds/pokeWaiting.mp3'));
- const audioOpen = useRef(new Audio('../public//sounds/openPoke.mp3'));
- const audioReturn = useRef(new Audio('../public/sounds/returnPoke.mp3'));
+ const audioCath = useRef(new Audio('/sounds/catchPoke.mp3'));
+ const audioWait = useRef(new Audio('/sounds/pokeWaiting.mp3'));
+ const audioOpen = useRef(new Audio('/sounds/openPoke.mp3'));
+ const audioReturn = useRef(new Audio('/sounds/returnPoke.mp3'));
 
  const colors = pokemon ? colorMap[pokemon.color] || {
   main: "#ccc",
@@ -341,7 +341,7 @@ function App() {
     MySwal1.fire({
       html: `
       <div style="display: flex; align-items: center; gap: 1rem;">
-        <img src="../public/icon.svg" alt="Ícone de sucesso" width="20" height="20" />
+        <img src="/icon.svg" alt="Ícone de sucesso" width="20" height="20" />
         <p style="margin: 0; font-size: 1.4rem;  font-family: 'Roboto', sans-serif;">Digite o nome de um pokemon ou um numero de 1 a 1025</p>
       </div>
       `,
@@ -362,7 +362,7 @@ function App() {
     MySwal1.fire({
       html: `
       <div style="display: flex; align-items: center; gap: 1rem;">
-        <img src="../public/icon.svg" alt="Ícone de sucesso" width="20" height="20" />
+        <img src="/icon.svg" alt="Ícone de sucesso" width="20" height="20" />
         <p style="margin: 0; font-size: 1.4rem;  font-family: 'Roboto', sans-serif;">Clique na Pokebola</p>
       </div>
       `,

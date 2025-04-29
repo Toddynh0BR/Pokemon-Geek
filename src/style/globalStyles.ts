@@ -47,6 +47,13 @@ body {
  width: 100%;
 
  overflow: hidden;
+
+ @media (max-width: 450px) {
+    overflow: scroll;
+    overflow-x: hidden;
+
+    max-height: 110vh;
+ }
 }
 
 .swal1 {

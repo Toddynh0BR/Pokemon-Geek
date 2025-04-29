@@ -296,9 +296,11 @@ video {
             transform: translate(0);
   }
 }
+
 @media (max-width: 450px) {
-  max-height: 100vh;
+  max-height: 110vh;
   overflow: hidden;
+
   video {
     display: none;
   }
@@ -733,7 +735,8 @@ main {
 
 @media (max-width: 450px) {
   position: fixed;
-  height: fit-content;
+  height: 100%;
+  flex: 1;
 
   .header {
 
@@ -751,7 +754,7 @@ main {
   flex: 1;
   width: 100%;
 
-  padding: 2rem;
+  padding: 2rem 2rem 6rem 2rem;
 
   flex-direction: column;
   align-items: center;
@@ -763,7 +766,7 @@ main {
     img {
       height: 28rem;
       width: 30rem;
-      margin-top: -5rem;
+
     }
   }
   .right {

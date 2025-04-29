@@ -501,7 +501,7 @@ function App() {
        <h1>{pokemon && pokemon.name ? pokemon.name : ' '}</h1>
        <p>{pokemon && pokemon.description ? pokemon.description : ' '}</p>
 
-       <h3>ELEMENTOS:</h3>
+       <h3 className='element'>ELEMENTOS:</h3>
        <div className="elements">
         {pokemon && pokemon.types ? pokemon.types.length ? pokemon.types.map((item, index)=> (
           <div key={index} className={`icon ${item.type.name}`}>

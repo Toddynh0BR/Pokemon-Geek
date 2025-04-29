@@ -296,10 +296,32 @@ video {
             transform: translate(0);
   }
 }
+@media (max-width: 450px) {
+  max-height: 100vh;
+  overflow: hidden;
+  video {
+    display: none;
+  }
+
+  justify-content: center;
+  .firstPage {
+    h1 {
+      font-size: 5rem;
+      text-align: center;
+
+      margin-top: 4rem;
+      margin-bottom: 4rem;
+    }
+  }
+
+  .me {
+    position: fixed;
+  }
+}
 `
 
 export const InputWapper = styled.div`
-  height: 5rem;
+height: 5rem;
   width: 60%;
  
   justify-content: center;
@@ -392,6 +414,10 @@ export const InputWapper = styled.div`
     }
 
   }
+
+  @media (max-width: 450px) {
+    width: 95%;
+  }
 `
 
 export const Background = styled.div<DivProps>`
@@ -404,6 +430,10 @@ z-index: 3;
 transform: ${({ isActive }) => isActive == 3 ? 'translateY(0)' : 'translateY(100%)'};
 transition: ${({ isActive }) => isActive == 3 ? '.5s ease-out' : '1.5s ease-in'};
 opacity: ${({ isActive }) => isActive == 3 ? 1 : 0};
+
+@media (max-width: 450px) {
+position: fixed;
+}
 `
 
 export const PokeInfo = styled.div<DivProps>`
@@ -699,5 +729,146 @@ main {
       }
     }
   }
+}
+
+@media (max-width: 450px) {
+  position: fixed;
+  height: fit-content;
+
+  .header {
+
+   .Logo {
+    transform: scale(80%);
+   }
+
+   .close {
+    height: 4.8rem;
+    width: 4.2rem;
+   }
+  }
+
+  main {
+  flex: 1;
+  width: 100%;
+
+  padding: 2rem;
+
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+
+  .left {
+    height: fit-content;
+    margin: 0;
+    img {
+      height: 28rem;
+      width: 30rem;
+      margin-top: -5rem;
+    }
+  }
+  .right {
+    align-items: center;
+    gap: 1rem;
+
+    .element {
+      display: none;
+    }
+    h2 {
+     font-family: 'ZummeLight';
+     font-size: 5rem;
+     font-weight: 400;
+     color: #FFF;
+     text-align: left;
+    }
+
+    h1 {
+     font-family: 'ZummeBlackI';
+     letter-spacing: .1rem;
+     line-height: normal;
+     font-size: 6rem;
+     text-align: left;
+     color: #fff;
+
+     margin-top: 0rem;
+    }
+
+    p {
+
+      max-width: 30rem;
+    }
+
+    h3 {
+      font-family: 'Product';
+      letter-spacing: .5rem;
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: #fff;
+
+      margin: 1rem 0;
+    }
+
+    .elements {
+    gap: 1rem;
+
+.icon {
+    height: 4rem;
+    width: 4rem;
+}
+
+
+
+    }
+
+    .evolutions {
+      height: fit-content;
+      width: 100%;
+
+      align-items: center;
+      display: flex;
+      gap: 2rem;
+
+      .evo {
+        height: 7rem;
+        width: 7rem;
+
+        border-radius: 50%;
+        border: none;
+
+        transition: all.2s ease-in-out;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        
+        img {
+          height: 75%;
+          width: 75%;
+        }
+
+        &:hover {
+          filter: saturate(120%);
+          transform: scale(1.1);
+          cursor: pointer;
+        }
+      }
+
+      .poke1 {
+        height: 7rem;
+        width: 7rem;
+      }
+      .poke2 {
+        height: 9rem;
+        width: 9rem;
+      }
+      .poke3 {
+        height: 11rem;
+        width: 11rem;
+      }
+
+      .this {
+       border: 2px solid #fff;
+      }
+    }
+  }
+}
 }
 `
